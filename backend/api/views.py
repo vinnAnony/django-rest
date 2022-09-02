@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from api.models import Product
+from api.serializer import ProductSerializer
 
 @api_view(["GET"])
 def api_home (request, *args, **kwargs):
@@ -11,9 +12,10 @@ def api_home (request, *args, **kwargs):
     # if request.method != "POST":
     #     return Response({"detail": "GET not allowed"}, status=405)
 
-    model_data = Product.objects.all().first()
+    instance = Product.objects.all().first()
     data = {}
-    if model_data:
-        data = model_to_dict(model_data,fields=['id', 'name'])
+    if instance:
+        # data = model_to_dict(instance,fields=['id', 'name','price','discount_price'])
+        data = ProductSerializer(instance).data
 
     return Response(data)

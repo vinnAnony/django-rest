@@ -11,3 +11,10 @@ class Product(models.Model):
     unit = models.CharField(max_length=50) #Create a many to one relationship FK (Sys Meta >Measure_Units)
     category = models.CharField(max_length=100) #Create a many to one relationship FK (Sys <eta >Categories)
     isFeatured = models.BooleanField()
+
+    @property
+    def discounted_price(self):
+        return float(self.price) *0.8
+
+    def get_discount(self):
+        return float(self.price) - self.discounted_price
